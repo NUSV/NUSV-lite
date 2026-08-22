@@ -25,7 +25,7 @@ APK_NAME="NUSV-LITE-v${VERSION}-alpha.apk"
 cat > deploy/version.json <<EOF
 {
   "latestVersion": "${VERSION}",
-  "downloadUrl": "https://raw.githubusercontent.com/Verlintas/nusv-lite-sync/main/${APK_NAME}",
+  "downloadUrl": "https://raw.githubusercontent.com/NUSV/nusv-lite-sync/main/${APK_NAME}",
   "changelog": "自动部署 $(date +%Y-%m-%d)"
 }
 EOF
