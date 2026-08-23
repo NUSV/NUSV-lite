@@ -158,7 +158,7 @@ class SyncManager(context: Context, private val db: AppDatabase) {
     }
 
     companion object {
-        const val DEFAULT_SYNC_URL = "https://raw.githubusercontent.com/Verlintas/nusv-lite-sync/main"
+        const val DEFAULT_SYNC_URL = "https://raw.githubusercontent.com/NUSV/nusv-lite-sync/main"
     }
 }
 
