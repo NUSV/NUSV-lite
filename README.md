@@ -1,5 +1,15 @@
 # NUSV LITE
 
+<p align="center"><img src="banner.svg" alt="NUSV LITE" width="100%"></p>
+
+<p align="center">
+  <a href="https://github.com/NUSV/NUSV-lite/releases"><img src="https://img.shields.io/github/v/release/NUSV/NUSV-lite?label=release" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/NUSV/NUSV-lite" alt="License"></a>
+  <a href="https://github.com/NUSV/NUSV-lite"><img src="https://img.shields.io/github/stars/NUSV/NUSV-lite" alt="Stars"></a>
+  <a href="https://github.com/NUSV/NUSV-lite"><img src="https://img.shields.io/github/languages/top/NUSV/NUSV-lite?label=language" alt="Language"></a>
+  <img src="https://img.shields.io/badge/platform-Android-brightgreen?logo=android" alt="Platform">
+</p>
+
 Official Android client for NUSV, putting the entire NUSV ecosystem in your pocket.
 
 ## Features
