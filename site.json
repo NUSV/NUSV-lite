@@ -1,0 +1,8 @@
+{
+  "name": "NUSV LITE",
+  "tagline": "The official NUSV Android client: content hub, 11 built-in games, 60+ tools, widgets, theme store and daily check-in points.",
+  "platforms": [
+    "Android"
+  ],
+  "docs": "/docs/nusv-lite.html"
+}
