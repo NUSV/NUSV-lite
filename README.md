@@ -1,7 +1,5 @@
 # NUSV LITE
 
-<p align="center"><img src="banner.svg" alt="NUSV LITE" width="100%"></p>
-
 <p align="center">
   <a href="https://github.com/NUSV/NUSV-lite/releases"><img src="https://img.shields.io/github/v/release/NUSV/NUSV-lite?label=release" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/NUSV/NUSV-lite" alt="License"></a>
