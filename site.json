@@ -4,5 +4,6 @@
   "platforms": [
     "Android"
   ],
-  "docs": "/docs/nusv-lite.html"
+  "docs": "/docs/nusv-lite.html",
+  "slug": "nusv-lite"
 }
