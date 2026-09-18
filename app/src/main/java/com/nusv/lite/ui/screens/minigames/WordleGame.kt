@@ -271,7 +271,7 @@ fun WordleGame(onBack: () -> Unit) {
                 contentAlignment = Alignment.Center,
             ) { Text("\u2190", style = MaterialTheme.typography.titleLarge) }
             Spacer(Modifier.width(12.dp))
-            Text(strings.toolTitles["wordle"] ?: "Wordle", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.weight(1f))
+            Text(strings.toolTitles["wordle"] ?: "Word Guess", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.weight(1f))
             Column(horizontalAlignment = Alignment.End) {
                 Text(strings.gameBestScore.format(wins), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (rewardMsg != null) {

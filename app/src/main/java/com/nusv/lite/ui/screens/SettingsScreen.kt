@@ -43,6 +43,7 @@ import com.nusv.lite.util.LayoutPrefs
 import com.nusv.lite.util.LocalAppStrings
 import com.nusv.lite.util.SoundManager
 import com.nusv.lite.util.SoundPrefs
+import com.nusv.lite.util.ossLibraries
 import com.nusv.lite.BuildConfig
 import com.nusv.lite.util.performIfEnabled
 import kotlinx.coroutines.launch
@@ -64,6 +65,7 @@ fun SettingsScreen(
     var syncStatus by remember { mutableStateOf<String?>(null) }
     var easterEggClicks by remember { mutableStateOf(0) }
     var showEasterEgg by remember { mutableStateOf(false) }
+    var showLicenses by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val strings = LocalAppStrings.current
     var currentLang by remember { mutableStateOf(LanguagePrefs.get()) }
@@ -418,6 +420,22 @@ fun SettingsScreen(
             )
         }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { haptic.performIfEnabled(); showLicenses = true }
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = strings.settingsOpenSource, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = "\u203A",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
         Spacer(Modifier.weight(1f))
 
         Text(
@@ -428,6 +446,48 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .padding(bottom = 100.dp)
                 .padding(horizontal = 20.dp),
+        )
+    }
+
+    if (showLicenses) {
+        AlertDialog(
+            onDismissRequest = { showLicenses = false },
+            title = {
+                Text(
+                    text = strings.ossTitle,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            },
+            text = {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    ossLibraries.forEach { lib ->
+                        Text(text = lib.name, style = MaterialTheme.typography.bodyMedium)
+                        Text(
+                            text = lib.license,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.height(10.dp))
+                    }
+                    Text(
+                        text = strings.ossFooter,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = strings.okLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable { haptic.performIfEnabled(); showLicenses = false }.padding(12.dp)
+                    )
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(24.dp)
         )
     }
 

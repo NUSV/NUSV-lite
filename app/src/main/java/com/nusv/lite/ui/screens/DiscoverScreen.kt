@@ -268,14 +268,14 @@ val miniApps = listOf(
     MiniApp("quotes", "Random Quotes", "Inspiration & wisdom", Icons.Outlined.Star, Icons.Filled.Star, Category.OTHER),
     MiniApp("namer", "Name Generator", "Fantasy / Japanese / Sci-Fi…", Icons.Outlined.Person, Icons.Filled.Person, Category.OTHER),
     MiniApp("snake", "Snake", "Classic snake game", Icons.Outlined.PlayArrow, Icons.Filled.PlayArrow, Category.GAMES),
-    MiniApp("wordle", "Wordle", "Guess the 5-letter word", Icons.Outlined.Spellcheck, Icons.Filled.Spellcheck, Category.GAMES),
+    MiniApp("wordle", "Word Guess", "Guess the 5-letter word", Icons.Outlined.Spellcheck, Icons.Filled.Spellcheck, Category.GAMES),
     MiniApp("simon", "Simon Says", "Memory sequence game", Icons.Outlined.Star, Icons.Filled.Star, Category.GAMES),
     MiniApp("whack", "Whack-a-Mole", "Tap the moles!", Icons.Outlined.SportsEsports, Icons.Filled.SportsEsports, Category.GAMES),
     MiniApp("flashlight", "Flashlight", "Screen torch light", Icons.Outlined.FlashOn, Icons.Filled.FlashOn, Category.UTILITIES),
     MiniApp("battery", "Battery Info", "Battery level & status", Icons.Outlined.BatteryFull, Icons.Filled.BatteryFull, Category.UTILITIES),
     MiniApp("quicktimer", "Quick Timer", "1 / 3 / 5 / 10 min presets", Icons.Outlined.Timer, Icons.Filled.Timer, Category.UTILITIES),
     // v1.10.0 games
-    MiniApp("tetris", "Tetris", "Classic falling blocks", Icons.Outlined.ViewModule, Icons.Filled.ViewModule, Category.GAMES),
+    MiniApp("tetris", "Falling Blocks", "Classic falling blocks", Icons.Outlined.ViewModule, Icons.Filled.ViewModule, Category.GAMES),
     MiniApp("gomoku", "Gomoku", "5-in-a-row vs AI", Icons.Outlined.Circle, Icons.Filled.Circle, Category.GAMES),
     MiniApp("sudoku", "Sudoku", "Logic number puzzle", Icons.Outlined.GridOn, Icons.Filled.GridOn, Category.GAMES),
     // v1.10.0 tools

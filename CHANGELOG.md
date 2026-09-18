@@ -2,10 +2,17 @@
 
 > Mirrored in the in-app "Docs" page.
 
+## v1.10.1 (2026-09-19)
+
+- **Home-screen widget layout fix**: redesigned as a horizontal 3×1 layout (points + streak on the left, check-in button on the right); the button is no longer clipped
+- **Widget i18n**: added English widget strings (previously fell back to Chinese on English devices)
+- **Trademark cleanup**: "Wordle" → "Word Guess" and "Tetris" → "Falling Blocks" across UI, docs and changelog
+- **Third-party notices**: added `THIRD_PARTY_NOTICES.md` (Apache 2.0 compliance) and an "Open Source Licenses" page in Settings
+
 ## v1.10.0 (2026-07-31)
 
 - **New games ×3**:
-  - Tetris: 10×20 board, 7 classic tetrominoes, rotate / soft drop / hard drop, speed levels, line-clear scoring with high score
+  - Falling Blocks: 10×20 board, 7 classic tetrominoes, rotate / soft drop / hard drop, speed levels, line-clear scoring with high score
   - Gomoku: 15×15 board vs AI; threat-aware AI (always blocks open threes, kills open fours), 8-ply search + threat extension, Beginner / Ultimate difficulties, +100 points on win
   - Sudoku: auto-generated puzzles, Easy / Medium / Hard, check & erase, +40 points on completion
 - **New tools ×3**: Anniversary (countdown to important dates), Sleep Calculator (90-minute cycle recommendations), Lottery Gen (5+2 lucky picks)
@@ -21,7 +28,7 @@
 - **Pre-release full audit fixes**:
   - Gomoku AI strengthened: 8-ply search + threat extension, 6:0 vs Beginner AI
   - Gomoku: AI stuck after restart fixed
-  - Wordle: physical keyboard input fixed
+  - Word Guess: physical keyboard input fixed
   - Whack-a-Mole: leaving the game mid-round no longer grants rewards
   - Snake: rapid direction changes no longer reverse the snake
   - Sudoku: puzzle generation / difficulty switching state fixed; high-score formatting fixed
@@ -30,7 +37,7 @@
   - Anniversary: cross-timezone day-count offset fixed
   - Scientific Calculator: large numbers now shown in scientific notation
   - Morse Code: space mapping fixed both ways; Interval Timer timing fixed; Kaomoji corrupted characters fixed
-- **Full i18n pass**: all hardcoded UI strings (Home / Browse / Search / Detail / Docs / Settings / Theme Shop / World Clock / Tetris) now switch between Chinese and English
+- **Full i18n pass**: all hardcoded UI strings (Home / Browse / Search / Detail / Docs / Settings / Theme Shop / World Clock / Falling Blocks) now switch between Chinese and English
 - Version bumped to 1.10.0 (73 tools total)
 
 ## v1.9.0 (2026-07-30)
@@ -57,7 +64,7 @@
   - Minesweeper: +5 on win
   - Memory Match: +5 on completion
   - Snake: +1 per food
-  - Wordle: +5 on correct guess
+  - Word Guess: +5 on correct guess
   - Simon Says: +1 per round
   - Whack-a-Mole: +1 per 2 moles
 - **Game high scores**: new GameStatsManager, best scores tracked per game, shown in-game as Best
@@ -65,22 +72,22 @@
 - **Theme shop**: shows check-in streak (🔥 flame icon + streak reward hint)
 - **Game animation fixes**: dice roll, coin flip, magic 8-ball shake now animate correctly
 - **Morse Code fix**: removed non-standard `#` mapping conflicting with `@`
-- **Wordle dictionary expansion**: 56 → 540+ common 5-letter words
-- **Wordle keyboard position**: added 96dp bottom padding to avoid navigation bar overlap
+- **Word Guess dictionary expansion**: 56 → 540+ common 5-letter words
+- **Word Guess keyboard position**: added 96dp bottom padding to avoid navigation bar overlap
 - **Memory Match freeze fix**: game no longer gets stuck after two mismatched flips
 - Version bumped to 1.8.0 (47 tools total)
 
 ## v1.7.1 (2026-07-30)
 
 - Fixed multiple bugs introduced in 1.7.0
-- Wordle dictionary expanded from 56 to 540+ common words
-- Wordle keyboard bottom padding to avoid navigation bar overlap
+- Word Guess dictionary expanded from 56 to 540+ common words
+- Word Guess keyboard bottom padding to avoid navigation bar overlap
 - Fixed Memory Match freeze after two mismatched flips
 - Version bumped to 1.7.1
 
 ## v1.7.0 (2026-07-30)
 
-- 4 new games: Snake (Canvas body gradient + pulsing food), Wordle (virtual keyboard + letter state colors), Simon Says (4 glowing buttons), Whack-a-Mole (30-second challenge)
+- 4 new games: Snake (Canvas body gradient + pulsing food), Word Guess (virtual keyboard + letter state colors), Simon Says (4 glowing buttons), Whack-a-Mole (30-second challenge)
 - Game effects: TicTacToe spring placement + win pulse, Memory Match card pop-in + match highlight, Snake food particle rotation
 - All games fully integrated with the language switching system (zh/en)
 - Added 6 missing haptic feedback triggers
@@ -103,7 +110,7 @@
 - Settings layout switching (list / 2-col / 3-col grid)
 - Discover search keyword highlighting
 - Result sharing: random quotes, QR content, name generator, scientific calculator
-- 4 new games: Snake, Wordle, Simon Says, Whack-a-Mole
+- 4 new games: Snake, Word Guess, Simon Says, Whack-a-Mole
 - Game effects: TicTacToe spring animation + win pulse, Memory Match card pop-in, Snake food particles
 
 ## v1.6.0 (2026-07-30)

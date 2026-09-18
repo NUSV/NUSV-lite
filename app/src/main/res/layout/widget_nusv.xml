@@ -3,53 +3,47 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="@drawable/widget_bg"
+    android:gravity="center_vertical"
     android:padding="14dp">
 
-    <TextView
-        android:id="@+id/widget_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/widget_name"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/widget_points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="@string/widget_points_default"
-        android:textColor="#FFFFFF"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/widget_streak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="@string/widget_streak_default"
-        android:textColor="#B3FFFFFF"
-        android:textSize="12sp" />
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/widget_checkin_btn"
+        <TextView
+            android:id="@+id/widget_points"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:backgroundTint="#FF3D66"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="@string/widget_checkin"
+            android:layout_height="wrap_content"
+            android:text="@string/widget_points_default"
             android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_streak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/widget_streak_default"
+            android:textColor="#B3FFFFFF"
             android:textSize="12sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/widget_checkin_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:minWidth="64dp"
+        android:gravity="center"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:background="@drawable/widget_btn_bg"
+        android:text="@string/widget_checkin"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:textStyle="bold" />
 </LinearLayout>

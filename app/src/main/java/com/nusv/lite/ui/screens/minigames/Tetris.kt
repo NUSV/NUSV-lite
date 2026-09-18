@@ -236,7 +236,7 @@ fun Tetris(onBack: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextButton(onClick = { onBack() }) { Text("‹") }
-            Text("Tetris", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(strings.toolTitles["tetris"] ?: "Falling Blocks", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             TextButton(onClick = { if (!gameOver) { haptic.performIfEnabled(); isPaused = !isPaused } }) {
                 Text(if (isPaused) "▶" else "⏸")
             }

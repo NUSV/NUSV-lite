@@ -19,4 +19,11 @@
     <string name="cat_utilities">Utilities</string>
     <string name="cat_devtools">Dev Tools</string>
     <string name="cat_other">Other</string>
+    <string name="widget_name">NUSV</string>
+    <string name="widget_points_default">Points: 0</string>
+    <string name="widget_points_value">Points: %1$d</string>
+    <string name="widget_streak_default">Streak: 0 days</string>
+    <string name="widget_streak_value">Streak: %1$d days</string>
+    <string name="widget_checkin">Check in</string>
+    <string name="widget_checkin_done">Checked in</string>
 </resources>

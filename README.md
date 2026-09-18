@@ -13,7 +13,7 @@ Official Android client for NUSV, putting the entire NUSV ecosystem in your pock
 ## Features
 
 - **Content hub**: browse the latest posts across all NUSV sites, organized by category for quick access
-- **11 built-in games**: Tic-Tac-Toe, 2048, Minesweeper, Memory Match, Snake, Wordle, Simon Says, Whack-a-Mole, Tetris, Gomoku (vs. a threat-aware AI with two difficulty levels), Sudoku — earn points on wins, per-game high scores
+- **11 built-in games**: Tic-Tac-Toe, 2048, Minesweeper, Memory Match, Snake, Word Guess, Simon Says, Whack-a-Mole, Falling Blocks, Gomoku (vs. a threat-aware AI with two difficulty levels), Sudoku — earn points on wins, per-game high scores
 - **60+ built-in tools**:
   - *Everyday*: dice & coin flips, tip / BMI / age calculators, unit & currency converters, world clock, stopwatch, countdown, pomodoro, bill splitter, date difference, expense tracker, quick timer, flashlight, battery info, anniversary countdown, sleep calculator, lottery generator
   - *Dev*: JSON formatter, Base64, hash, UUID, epoch & URL & color & case converters, regex tester, Markdown preview, QR code generator, text statistics, lorem ipsum, password generator, text encryption
