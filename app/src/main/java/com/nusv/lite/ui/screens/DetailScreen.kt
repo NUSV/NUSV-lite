@@ -46,9 +46,11 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.nusv.lite.BuildConfig
 import com.nusv.lite.data.SyncManager
 import com.nusv.lite.data.UpdateInfo
 import com.nusv.lite.util.LocalAppStrings
+import com.nusv.lite.util.VersionUtils
 import com.nusv.lite.util.performIfEnabled
 import kotlinx.coroutines.launch
 import com.nusv.lite.model.Category
@@ -219,6 +221,8 @@ fun DetailScreen(
 
                 if (showUpdateDialog) {
                     val info = updateInfo
+                    val currentVer = BuildConfig.VERSION_NAME
+                    val hasUpdate = info != null && VersionUtils.isNewer(info.latestVersion, currentVer)
                     AlertDialog(
                         onDismissRequest = { showUpdateDialog = false },
                         title = { Text("NUSV LITE") },
@@ -226,8 +230,6 @@ fun DetailScreen(
                             if (checkError) {
                                 Text(strings.updateCheckFailed.format("NUSV Portal"))
                             } else if (info != null) {
-                                val currentVer = "1.0.0"
-                                val hasUpdate = info.latestVersion != currentVer
                                 Column {
                                     Text(
                                         if (hasUpdate) strings.updateAvailable.format(info.latestVersion)
@@ -252,11 +254,11 @@ fun DetailScreen(
                             }
                         },
                         dismissButton = {
-                            if (updateInfo != null && updateInfo!!.downloadUrl.isNotBlank()) {
+                            if (info != null && hasUpdate && info.downloadUrl.isNotBlank()) {
                                 Button(onClick = {
                                     haptic.performIfEnabled()
                                     showUpdateDialog = false
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateInfo!!.downloadUrl))
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(info.downloadUrl))
                                     context.startActivity(intent)
                                 }) {
                                     Text(strings.downloadLabel)
