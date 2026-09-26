@@ -119,6 +119,8 @@ data class AppStrings(
     val cdUndo: String,
     val cdClear: String,
     val cdSave: String,
+    val cdSaved: String,
+    val cdSaveFailed: String,
 
     val dayLabel: String,
     val nightLabel: String,
@@ -357,6 +359,8 @@ val ZHStrings = AppStrings(
     cdUndo = "撤销",
     cdClear = "清空",
     cdSave = "保存",
+    cdSaved = "已保存到相册",
+    cdSaveFailed = "保存失败，请检查存储权限",
 
     dayLabel = "白天",
     nightLabel = "黑夜",
@@ -595,6 +599,8 @@ val ENStrings = AppStrings(
     cdUndo = "Undo",
     cdClear = "Clear",
     cdSave = "Save",
+    cdSaved = "Saved to gallery",
+    cdSaveFailed = "Couldn't save, check storage permission",
 
     dayLabel = "Day",
     nightLabel = "Night",

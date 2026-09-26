@@ -1,9 +1,14 @@
 package com.nusv.lite.ui.screens.tools
 
+import android.Manifest
 import android.content.ContentValues
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -65,6 +70,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import com.nusv.lite.util.LocalAppStrings
 import com.nusv.lite.util.performIfEnabled
 import java.lang.System
 import kotlinx.coroutines.delay
@@ -103,44 +110,50 @@ private val presetColors = listOf(
 
 private val brushSizeOptions = listOf(3f, 8f, 16f, 30f, 50f)
 
-fun saveDrawing(context: Context, strokes: List<Stroke>, width: Int, height: Int) {
-    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = android.graphics.Canvas(bitmap)
-    canvas.drawColor(android.graphics.Color.WHITE)
-    for (stroke in strokes) {
-        if (stroke.points.size < 2) continue
-        val isEraser = stroke.mode == BrushMode.NORMAL && stroke.color == Color.White
-        val paint = android.graphics.Paint().apply {
-            color = if (isEraser) android.graphics.Color.WHITE else android.graphics.Color.argb(
-                (stroke.alpha * 255).toInt(),
-                (stroke.color.red * 255).toInt(),
-                (stroke.color.green * 255).toInt(),
-                (stroke.color.blue * 255).toInt()
-            )
-            strokeWidth = stroke.width
-            style = android.graphics.Paint.Style.STROKE
-            strokeCap = if (stroke.shape == BrushShape.ROUND) android.graphics.Paint.Cap.ROUND else android.graphics.Paint.Cap.SQUARE
-            strokeJoin = android.graphics.Paint.Join.ROUND
-            isAntiAlias = true
+/** Renders the strokes onto a bitmap and saves it to the gallery. Returns false when saving fails. */
+fun saveDrawing(context: Context, strokes: List<Stroke>, width: Int, height: Int): Boolean {
+    return try {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = android.graphics.Canvas(bitmap)
+        canvas.drawColor(android.graphics.Color.WHITE)
+        for (stroke in strokes) {
+            if (stroke.points.size < 2) continue
+            val isEraser = stroke.mode == BrushMode.NORMAL && stroke.color == Color.White
+            val paint = android.graphics.Paint().apply {
+                color = if (isEraser) android.graphics.Color.WHITE else android.graphics.Color.argb(
+                    (stroke.alpha * 255).toInt(),
+                    (stroke.color.red * 255).toInt(),
+                    (stroke.color.green * 255).toInt(),
+                    (stroke.color.blue * 255).toInt()
+                )
+                strokeWidth = stroke.width
+                style = android.graphics.Paint.Style.STROKE
+                strokeCap = if (stroke.shape == BrushShape.ROUND) android.graphics.Paint.Cap.ROUND else android.graphics.Paint.Cap.SQUARE
+                strokeJoin = android.graphics.Paint.Join.ROUND
+                isAntiAlias = true
+            }
+            val path = android.graphics.Path()
+            path.moveTo(stroke.points[0].x, stroke.points[0].y)
+            for (i in 1 until stroke.points.size) {
+                path.lineTo(stroke.points[i].x, stroke.points[i].y)
+            }
+            canvas.drawPath(path, paint)
         }
-        val path = android.graphics.Path()
-        path.moveTo(stroke.points[0].x, stroke.points[0].y)
-        for (i in 1 until stroke.points.size) {
-            path.lineTo(stroke.points[i].x, stroke.points[i].y)
+        val filename = "Drawing_${System.currentTimeMillis()}.png"
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/NUSV")
         }
-        canvas.drawPath(path, paint)
-    }
-    val filename = "Drawing_${System.currentTimeMillis()}.png"
-    val values = ContentValues().apply {
-        put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-        put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-        put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/NUSV")
-    }
-    val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-    uri?.let {
-        context.contentResolver.openOutputStream(it)?.use { out ->
+        val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            ?: return false
+        val output = context.contentResolver.openOutputStream(uri) ?: return false
+        output.use { out ->
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
         }
+        true
+    } catch (_: Exception) {
+        false
     }
 }
 
@@ -226,6 +239,7 @@ fun CanvasDrawing(onBack: () -> Unit) {
     val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
     val density = LocalDensity.current.density
+    val strings = LocalAppStrings.current
     val strokes = remember { mutableStateListOf<Stroke>() }
     val currentStroke = remember { mutableStateOf<Stroke?>(null) }
     var currentColor by remember { mutableStateOf(Color.Black) }
@@ -236,6 +250,18 @@ fun CanvasDrawing(onBack: () -> Unit) {
     var isEraser by remember { mutableStateOf(false) }
     var showMoreColors by remember { mutableStateOf(false) }
     var showTooltip by remember { mutableStateOf<String?>(null) }
+
+    val saveToGallery = {
+        val saved = saveDrawing(context, strokes.toList(), 1080, 1920)
+        showTooltip = if (saved) strings.cdSaved else strings.cdSaveFailed
+    }
+    // Android 8/9 need WRITE_EXTERNAL_STORAGE to insert into MediaStore;
+    // API 29+ uses scoped storage and needs no permission.
+    val storagePermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) saveToGallery() else showTooltip = strings.cdSaveFailed
+    }
 
     LaunchedEffect(showTooltip) {
         if (showTooltip != null) { delay(2000); showTooltip = null }
@@ -256,7 +282,7 @@ fun CanvasDrawing(onBack: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier.size(36.dp).background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp)).clickable { haptic.performIfEnabled(); onBack() },
+                modifier = Modifier.size(36.dp).background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp)).clickable(onClickLabel = strings.cdBack) { haptic.performIfEnabled(); onBack() },
                 contentAlignment = Alignment.Center,
             ) {
                 Text("\u2190", style = MaterialTheme.typography.titleLarge)
@@ -502,30 +528,38 @@ fun CanvasDrawing(onBack: () -> Unit) {
                 enabled = strokes.isNotEmpty(),
                 contentPadding = ButtonDefaults.TextButtonContentPadding,
             ) {
-                Icon(Icons.Filled.Undo, contentDescription = "Undo", modifier = Modifier.size(18.dp))
+                Icon(Icons.Filled.Undo, contentDescription = strings.cdUndo, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(2.dp))
-                Text("Undo")
+                Text(strings.cdUndo)
             }
             Button(
                 onClick = { strokes.clear() },
                 enabled = strokes.isNotEmpty(),
                 contentPadding = ButtonDefaults.TextButtonContentPadding,
             ) {
-                Icon(Icons.Filled.Clear, contentDescription = "Clear", modifier = Modifier.size(18.dp))
+                Icon(Icons.Filled.Clear, contentDescription = strings.cdClear, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(2.dp))
-                Text("Clear")
+                Text(strings.cdClear)
             }
             Button(
                 onClick = {
-                    saveDrawing(context, strokes.toList(), 1080, 1920)
-                    showTooltip = "Saved!"
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ||
+                        ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        saveToGallery()
+                    } else {
+                        storagePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    }
                 },
                 enabled = strokes.isNotEmpty(),
                 contentPadding = ButtonDefaults.TextButtonContentPadding,
             ) {
-                Icon(Icons.Filled.Save, contentDescription = "Save", modifier = Modifier.size(18.dp))
+                Icon(Icons.Filled.Save, contentDescription = strings.cdSave, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(2.dp))
-                Text("Save")
+                Text(strings.cdSave)
             }
         }
 
