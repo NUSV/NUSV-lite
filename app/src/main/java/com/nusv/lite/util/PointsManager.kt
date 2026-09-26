@@ -1,6 +1,7 @@
 package com.nusv.lite.util
 
 import android.content.Context
+import com.nusv.lite.widget.NusvWidgetProvider
 import java.util.Calendar
 
 object PointsManager {
@@ -28,6 +29,7 @@ object PointsManager {
     fun addPoints(c: Context, amount: Int) {
         val balance = getBalance(c) + amount * getPointsMultiplier(c)
         prefs(c).edit().putInt(KEY_BALANCE, balance).apply()
+        NusvWidgetProvider.refresh(c)
     }
 
     fun isOrcaPurchased(c: Context): Boolean = prefs(c).getBoolean(KEY_ORCA_PURCHASED, false)
@@ -49,6 +51,7 @@ object PointsManager {
         prefs(c).edit().putInt(KEY_BALANCE, balance - ORCA_PRICE).apply()
         setOrcaPurchased(c, true)
         unlock(c, ORCA_THEME)
+        NusvWidgetProvider.refresh(c)
         return true
     }
 
@@ -111,6 +114,7 @@ object PointsManager {
             .putInt(KEY_STREAK, streak)
             .putLong(KEY_LAST_STREAK_DATE, now)
             .apply()
+        NusvWidgetProvider.refresh(c)
         return points + bonus
     }
 
@@ -123,6 +127,7 @@ object PointsManager {
         if (balance < price) return false
         prefs(c).edit().putInt(KEY_BALANCE, balance - price).apply()
         unlock(c, theme)
+        NusvWidgetProvider.refresh(c)
         return true
     }
 }
